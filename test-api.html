@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API - Operaciones con Matrices</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .test-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 18px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .btn-sum {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-sum:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-multiply {
+            background: #68a063;
+            color: white;
+        }
+        
+        .btn-multiply:hover {
+            background: #5a8c4d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(104, 160, 99, 0.3);
+        }
+        
+        .btn-health {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-health:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            max-height: 200px;
+            overflow-y: auto;
+            border-left: 4px solid #667eea;
+            background: #f8f9ff;
+        }
+        
+        .status.success {
+            border-left-color: #27ae60;
+            background: #e8f8f5;
+            color: #27ae60;
+        }
+        
+        .status.error {
+            border-left-color: #e74c3c;
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+        
+        .status.pending {
+            border-left-color: #f39c12;
+            background: #fef5e7;
+            color: #f39c12;
+        }
+        
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .server-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .server-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .server-status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .server-status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .server-status.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .server-status.unknown {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧮 Test API - Operaciones con Matrices</h1>
+        
+        <!-- Node.js Server -->
+        <div class="test-section">
+            <h2>Servidor Node.js (Puerto 3001)</h2>
+            <div class="server-grid">
+                <div class="server-card">
+                    <h3>Estado del servidor</h3>
+                    <div id="nodejs-status" class="server-status unknown">Verificando...</div>
+                    <button class="btn-health" onclick="checkHealth('nodejs')">Verificar Conexión</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 15px;">
+                <div class="test-controls">
+                    <button class="btn-sum" onclick="testNodeSum()">Test Suma</button>
+                    <button class="btn-multiply" onclick="testNodeMultiply()">Test Multiplicación</button>
+                </div>
+                <div id="nodejs-result" class="status"></div>
+            </div>
+        </div>
+        
+        <!-- Python Server -->
+        <div class="test-section">
+            <h2>Servidor Python (Puerto 3002)</h2>
+            <div class="server-grid">
+                <div class="server-card">
+                    <h3>Estado del servidor</h3>
+                    <div id="python-status" class="server-status unknown">Verificando...</div>
+                    <button class="btn-health" onclick="checkHealth('python')">Verificar Conexión</button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 15px;">
+                <div class="test-controls">
+                    <button class="btn-sum" onclick="testPythonSum()">Test Suma</button>
+                    <button class="btn-multiply" onclick="testPythonMultiply()">Test Multiplicación</button>
+                </div>
+                <div id="python-result" class="status"></div>
+            </div>
+        </div>
+        
+        <!-- Instrucciones -->
+        <div class="test-section">
+            <h2>📝 Instrucciones</h2>
+            <p style="color: #2c3e50; line-height: 1.6; margin-bottom: 10px;">
+                1. Inicia los servidores ejecutando en terminales separadas:
+            </p>
+            <div style="background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 10px; font-family: monospace; font-size: 12px; color: #333;">
+                # Terminal 1: Node.js<br>
+                cd server-node && npm install && npm start<br>
+                <br>
+                # Terminal 2: Python<br>
+                cd server-python && pip install -r requirements.txt && python app.py
+            </div>
+            <p style="color: #2c3e50; line-height: 1.6;">
+                2. Luego usa los botones de arriba para probar los endpoints.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const BASE_URL_NODE = 'http://localhost:3001';
+        const BASE_URL_PYTHON = 'http://localhost:3002';
+        
+        const testData = {
+            matrixA: [[1, 2], [3, 4]],
+            matrixB: [[5, 6], [7, 8]]
+        };
+        
+        function updateStatus(elementId, status, message) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${status}`;
+        }
+        
+        function updateServerStatus(serverId, online) {
+            const element = document.getElementById(serverId + '-status');
+            if (online) {
+                element.textContent = '🟢 En línea';
+                element.className = 'server-status online';
+            } else {
+                element.textContent = '🔴 Desconectado';
+                element.className = 'server-status offline';
+            }
+        }
+        
+        async function checkHealth(server) {
+            const baseUrl = server === 'nodejs' ? BASE_URL_NODE : BASE_URL_PYTHON;
+            const resultId = server + '-result';
+            
+            updateStatus(resultId, 'pending', 'Verificando conexión...');
+            
+            try {
+                const response = await fetch(`${baseUrl}/health`);
+                const data = await response.json();
+                updateStatus(resultId, 'success', 
+                    `✓ Servidor ${server === 'nodejs' ? 'Node.js' : 'Python'} en línea\n\n` +
+                    JSON.stringify(data, null, 2)
+                );
+                updateServerStatus(server, true);
+            } catch (err) {
+                updateStatus(resultId, 'error', 
+                    `✗ No se puede conectar a ${baseUrl}\n\n` +
+                    `Error: ${err.message}`
+                );
+                updateServerStatus(server, false);
+            }
+        }
+        
+        async function callApi(baseUrl, endpoint, data, serverId) {
+            const resultId = serverId + '-result';
+            
+            updateStatus(resultId, 'pending', 'Procesando...');
+            
+            try {
+                const response = await fetch(`${baseUrl}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateStatus(resultId, 'success', 
+                        `✓ Operación exitosa\n\n${JSON.stringify(result, null, 2)}`
+                    );
+                } else {
+                    updateStatus(resultId, 'error', 
+                        `✗ Error en la operación\n\n${JSON.stringify(result, null, 2)}`
+                    );
+                }
+            } catch (err) {
+                updateStatus(resultId, 'error', 
+                    `✗ Error de conexión: ${err.message}`
+                );
+            }
+        }
+        
+        function testNodeSum() {
+            callApi(BASE_URL_NODE, '/api/sum', testData, 'nodejs');
+        }
+        
+        function testNodeMultiply() {
+            callApi(BASE_URL_NODE, '/api/multiply', testData, 'nodejs');
+        }
+        
+        function testPythonSum() {
+            callApi(BASE_URL_PYTHON, '/api/sum', testData, 'python');
+        }
+        
+        function testPythonMultiply() {
+            callApi(BASE_URL_PYTHON, '/api/multiply', testData, 'python');
+        }
+        
+        // Verificar servidores al cargar
+        window.addEventListener('load', () => {
+            checkHealth('nodejs');
+            checkHealth('python');
+        });
+    </script>
+</body>
+</html>

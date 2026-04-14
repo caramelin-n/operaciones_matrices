@@ -1,0 +1,311 @@
+/* Estilos generales */
+:root {
+  --primary: #667eea;
+  --secondary: #764ba2;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --dark: #2c3e50;
+  --light: #ecf0f1;
+  --border-color: #bdc3c7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* App container */
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Header */
+.header {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+}
+
+.header h1 {
+  margin: 0;
+  color: var(--dark);
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.header p {
+  margin: 10px 0 0 0;
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+.reset-dimensions-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.reset-dimensions-btn:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+}
+
+/* Dimensiones setup */
+.dimensions-setup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.matrix-config,
+.operation-mode {
+  background: linear-gradient(135deg, #f5f7fa 0%, #f0f3f7 100%);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.matrix-config h3,
+.operation-mode h3 {
+  margin: 0 0 15px 0;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.dimension-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.dimension-input:last-child {
+  margin-bottom: 0;
+}
+
+.dimension-input label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 5px;
+}
+
+.dimension-input input {
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.dimension-input input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Mode buttons */
+.mode-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.mode-btn {
+  flex: 1;
+  padding: 10px 15px;
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.mode-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.mode-btn.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+}
+
+/* Start button */
+.start-btn {
+  grid-column: 1 / -1;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.start-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.start-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Matrices section */
+.matrices-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Operations section */
+.operations-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.operation-group {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.operation-group h2 {
+  margin: 0 0 15px 0;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Operation buttons */
+.operation-btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.local-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.local-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.nodejs-btn {
+  background: linear-gradient(135deg, #68a063, #5a8c4d);
+  box-shadow: 0 4px 15px rgba(104, 160, 99, 0.3);
+}
+
+.nodejs-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(104, 160, 99, 0.4);
+}
+
+.python-btn {
+  background: linear-gradient(135deg, #3776ab, #ffd43b);
+  color: #003d6b;
+  box-shadow: 0 4px 15px rgba(55, 118, 171, 0.3);
+}
+
+.python-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(55, 118, 171, 0.4);
+}
+
+.operation-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.operation-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .dimensions-setup {
+    grid-template-columns: 1fr;
+  }
+
+  .matrices-section,
+  .operations-section {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .reset-dimensions-btn {
+    position: static;
+    width: 100%;
+    margin-top: 15px;
+  }
+}
+
